@@ -40,6 +40,29 @@ NSURLSessionDataTask* mpp_dataTaskWithRequest(NSURLSession *self, SEL _cmd, NSUR
                 }
                 [subscriptionSummary setValue:mutableFeatures forKey:@"features"];
             }
+            
+            // Modify products array
+            NSArray *products = [subscriptionSummary objectForKeyedSubscript:@"products"];
+            if ([products isKindOfClass:[NSArray class]]) {
+                NSMutableArray *mutableProducts = [products mutableCopy];
+                if ([mutableProducts count] != 0) {
+                    NSLog(@"[MyPremiumPal] Products : %@", mutableProducts);
+                }
+                /*for (NSInteger i = 0; i < [mutableProducts count]; i++) {
+                    NSMutableDictionary *product = [[mutableProducts objectAtIndex:i] mutableCopy];
+                    [product setValue:@12 forKey:@"frequencyInterval"];
+                    [product setValue:@"YEAR" forKey:@"frequencyUnit"];
+                    [product setValue:@"mfp_12m_ios_7999_1m_trial" forKey:@"productId"];
+                    [product setValue:@"PREMIUM_PLUS" forKey:@"subscriptionTier"];
+                    [product setValue:@"TRIAL" forKey:@"subscriptionType"];
+                    [product setValue:@"9999-12-31T00:00:00.000Z" forKey:@"subscriptionEndDateTime"];
+                    [product setValue:@"APPLE" forKey:@"paymentProvider"];
+                    [product setValue:@YES forKey:@"willRenew"];
+                    [product setValue:@"2025-01-01T00:00:00.000Z" forKey:@"subscriptionStartDateTime"];
+                    [mutableProducts replaceObjectAtIndex:i withObject:product];
+                }
+                [subscriptionSummary setValue:mutableProducts forKey:@"products"];*/
+            }
 
             // Update the json object with modified subscription summary
             [[json valueForKeyPath:@"data"] setValue:subscriptionSummary forKey:@"getSubscriptionSummary"];
